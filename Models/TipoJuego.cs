@@ -4,6 +4,7 @@ namespace tp.Models
 {
     public class TipoJuego
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]

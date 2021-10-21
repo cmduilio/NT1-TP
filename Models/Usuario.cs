@@ -5,6 +5,7 @@ namespace tp.Models
 {
     public class Usuario
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]

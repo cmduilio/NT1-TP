@@ -5,7 +5,8 @@ namespace tp.Models
 {
     public class Juego
     {
-        public int IdJuego { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Required]
         public string Nombre { get; set; }

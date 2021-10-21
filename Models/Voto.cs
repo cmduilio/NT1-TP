@@ -4,6 +4,7 @@ namespace tp.Models
 {
     public class Voto
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]

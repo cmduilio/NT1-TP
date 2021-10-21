@@ -4,6 +4,7 @@ namespace tp.Models
 {
     public class Imagen
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]
