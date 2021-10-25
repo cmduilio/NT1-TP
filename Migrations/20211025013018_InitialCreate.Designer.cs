@@ -10,7 +10,7 @@ using tp.Database;
 namespace tp.Migrations
 {
     [DbContext(typeof(JuegoDbContext))]
-    [Migration("20211025000817_InitialCreate")]
+    [Migration("20211025013018_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,13 +44,11 @@ namespace tp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CantidadVotosJugador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CantidadVotosJugador")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CantidadVotosPeriodista")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CantidadVotosPeriodista")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ImagenId")
                         .HasColumnType("int");
@@ -59,13 +57,11 @@ namespace tp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PuntajeTotalJugador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("PuntajeTotalJugador")
+                        .HasColumnType("float");
 
-                    b.Property<string>("PuntajeTotalPeriodista")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("PuntajeTotalPeriodista")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -177,7 +173,7 @@ namespace tp.Migrations
             modelBuilder.Entity("tp.Models.TipoJuego", b =>
                 {
                     b.HasOne("tp.Models.Juego", null)
-                        .WithMany("TipoJuego")
+                        .WithMany("TiposJuego")
                         .HasForeignKey("JuegoId");
                 });
 
@@ -209,7 +205,7 @@ namespace tp.Migrations
 
             modelBuilder.Entity("tp.Models.Juego", b =>
                 {
-                    b.Navigation("TipoJuego");
+                    b.Navigation("TiposJuego");
                 });
 
             modelBuilder.Entity("tp.Models.Usuario", b =>
