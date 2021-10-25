@@ -5762,19 +5762,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\cmdui\\.nuget\\packages\\": {}
+    "C:\\Users\\Duilio\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "X:\\Mauro\\ORT\\Projects\\NT1\\tp\\tp.csproj",
+      "projectUniqueName": "D:\\ORT\\NT1\\NT1-TP\\tp.csproj",
       "projectName": "tp",
-      "projectPath": "X:\\Mauro\\ORT\\Projects\\NT1\\tp\\tp.csproj",
-      "packagesPath": "C:\\Users\\cmdui\\.nuget\\packages\\",
-      "outputPath": "X:\\Mauro\\ORT\\Projects\\NT1\\tp\\obj\\",
+      "projectPath": "D:\\ORT\\NT1\\NT1-TP\\tp.csproj",
+      "packagesPath": "C:\\Users\\Duilio\\.nuget\\packages\\",
+      "outputPath": "D:\\ORT\\NT1\\NT1-TP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\cmdui\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Duilio\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5829,7 +5829,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.412\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.414\\RuntimeIdentifierGraph.json"
       }
     }
   }
