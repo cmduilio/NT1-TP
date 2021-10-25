@@ -14,19 +14,19 @@ namespace tp.Models
         public string Nombre { get; set; }
 
         [Required]
-        public string PuntajeTotalJugador { get; set; }
+        public double PuntajeTotalJugador { get; set; }
 
         [Required]
-        public string CantidadVotosJugador { get; set; }
+        public int CantidadVotosJugador { get; set; }
 
         [Required]
-        public string PuntajeTotalPeriodista { get; set; }
+        public double PuntajeTotalPeriodista { get; set; }
 
         [Required]
-        public string CantidadVotosPeriodista { get; set; }
+        public int CantidadVotosPeriodista { get; set; }
         
         [Required]
-        public ICollection<TipoJuego> TipoJuego { get; set; }
+        public ICollection<TipoJuego> TiposJuego { get; set; }
 
         [Required]
         public Imagen Imagen { get; set; }

@@ -39,10 +39,10 @@ namespace tp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PuntajeTotalJugador = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CantidadVotosJugador = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PuntajeTotalPeriodista = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CantidadVotosPeriodista = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PuntajeTotalJugador = table.Column<double>(type: "float", nullable: false),
+                    CantidadVotosJugador = table.Column<int>(type: "int", nullable: false),
+                    PuntajeTotalPeriodista = table.Column<double>(type: "float", nullable: false),
+                    CantidadVotosPeriodista = table.Column<int>(type: "int", nullable: false),
                     ImagenId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
