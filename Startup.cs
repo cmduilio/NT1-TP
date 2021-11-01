@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,14 @@ namespace tp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                opciones => 
+                {
+                    opciones.LoginPath = "/Usuario/Ingresar";
+                    opciones.AccessDeniedPath = "/Usuario/AccesoDenegado";
+                    opciones.LogoutPath = "/Usuario/Salir";
+                }
+            );
             services.AddControllersWithViews();
             services.AddDbContext<JuegoDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -43,6 +52,8 @@ namespace tp
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,6 +62,8 @@ namespace tp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseCookiePolicy();
         }
     }
 }
