@@ -5762,19 +5762,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Duilio\\.nuget\\packages\\": {}
+    "C:\\Users\\HP.NOTEBOOK\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ORT\\NT1\\NT1-TP\\tp.csproj",
+      "projectUniqueName": "C:\\Users\\HP.NOTEBOOK\\OneDrive\\Escritorio\\FAVIO\\ORT\\2021-2C\\PROYECTO_NT1\\NT1-TP\\tp.csproj",
       "projectName": "tp",
-      "projectPath": "D:\\ORT\\NT1\\NT1-TP\\tp.csproj",
-      "packagesPath": "C:\\Users\\Duilio\\.nuget\\packages\\",
-      "outputPath": "D:\\ORT\\NT1\\NT1-TP\\obj\\",
+      "projectPath": "C:\\Users\\HP.NOTEBOOK\\OneDrive\\Escritorio\\FAVIO\\ORT\\2021-2C\\PROYECTO_NT1\\NT1-TP\\tp.csproj",
+      "packagesPath": "C:\\Users\\HP.NOTEBOOK\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HP.NOTEBOOK\\OneDrive\\Escritorio\\FAVIO\\ORT\\2021-2C\\PROYECTO_NT1\\NT1-TP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Duilio\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\HP.NOTEBOOK\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5829,7 +5829,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.414\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.411\\RuntimeIdentifierGraph.json"
       }
     }
   }

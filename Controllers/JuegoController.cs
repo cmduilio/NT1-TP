@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using tp.Models;
 using tp.Database;
+using System.Linq;
+using tp.Models.ViewModel;
 
 namespace tp.Controllers
 {
@@ -38,11 +41,21 @@ namespace tp.Controllers
         }
 
         public IActionResult GetAll(){
-            var Juegos = _juegoDbContext.Juegos;
             var JuegosCompletos = _juegoDbContext.Juegos
                                     .Include(x => x.TiposJuego)
-                                    .Include(x => x.Imagen);
-            return Json(JuegosCompletos);
+                                    .Include(x => x.Imagen)
+                                    .ToList();
+            
+            var juegos = JuegosCompletos.Select(x => new GaleriaViewModel
+            {  
+                IdJuego = x.Id,
+                Nombre = x.Nombre,
+                PuntajeTotalJugador = x.PuntajeTotalJugador,
+                PuntajeTotalPeriodista = x.PuntajeTotalPeriodista,
+                Imagen = x.Imagen,
+                TiposJuego = x.TiposJuego
+            }).ToList();
+            return View(juegos);
         }
 
         public IActionResult Privacy()
