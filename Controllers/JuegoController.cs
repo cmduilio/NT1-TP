@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using tp.Models;
 using tp.Database;
 
@@ -15,39 +17,20 @@ namespace tp.Controllers
             _juegoDbContext = juegoDbContext;
         }
 
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult Create([FromBody] Juego Juego)
         {
-            var Juego = new Juego {
-                Nombre = "Half life 2",
-                PuntajeTotalJugador = 5,
-                CantidadVotosJugador = 30,
-                PuntajeTotalPeriodista = 5,
-                CantidadVotosPeriodista = 23,
-                TiposJuego = new List<TipoJuego> {
-                    new TipoJuego {
-                        Nombre = "Shooter"
-                    }
-                },
-                Imagen = new Imagen{
-                    Url = "http://"
-                }
-            };
             _juegoDbContext.Juegos.Add(Juego);
             _juegoDbContext.SaveChanges();
             return Json(Juego);
         }
 
+        [HttpGet]
         public IActionResult GetAll(){
-            var Juegos = _juegoDbContext.Juegos;
             var JuegosCompletos = _juegoDbContext.Juegos
                                     .Include(x => x.TiposJuego)
-                                    .Include(x => x.Imagen);
+                                    .Include(x => x.Imagen).ToList();
             return Json(JuegosCompletos);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
     }
 }
