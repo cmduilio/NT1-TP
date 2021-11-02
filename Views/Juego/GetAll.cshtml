@@ -1,0 +1,29 @@
+@model List<tp.Models.ViewModel.GaleriaViewModel>;
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-12">
+                <div class="card" style="width: 18rem;">
+                    <img src="@item.Imagen" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        @foreach (var tipo in @item.TiposJuego)
+                        {
+                            <h6 class="TipoJuegos">@tipo.Nombre</h6>
+                        }
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h6 class="PuntajeTotalJugador">Puntaje Total de Jugadores: @item.PuntajeTotalJugador</h6>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h6 class="PuntajeTotalPeriodista">Puntaje Total de Periodistas: @item.PuntajeTotalPeriodista</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
