@@ -1,4 +1,5 @@
 bin/*
 obj/*
-obj
-appsettings.json
+.vs/*
+.vs
+appsettings.*
