@@ -11,6 +11,7 @@ namespace tp.Models
         public int Id { get; set; }
         
         [Required]
+        [Display(Name = "Usuario")]
         public string Nombre { get; set; }
 
         [Required]
