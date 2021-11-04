@@ -38,6 +38,14 @@ namespace tp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Ingresar()
+        {
+            var usuarioVM = new IngresarUsuarioViewModel{};
+
+            return View(usuarioVM);
+        }
+
+        [HttpGet]
         public IActionResult GetAll()
         {
             var usuarios = _usuarioDbContext.Usuarios

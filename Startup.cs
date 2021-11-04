@@ -26,7 +26,7 @@ namespace tp
                 opciones => 
                 {
                     opciones.LoginPath = "/Usuario/Ingresar";
-                    opciones.AccessDeniedPath = "/Usuario/AccesoDenegado";
+                    opciones.AccessDeniedPath = "/home";
                     opciones.LogoutPath = "/Usuario/Salir";
                 }
             );
