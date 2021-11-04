@@ -2,9 +2,11 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using tp.Database;
 using tp.Models;
 using tp.Models.ViewModel;
+
 
 namespace tp.Controllers
 {
@@ -39,6 +41,8 @@ namespace tp.Controllers
         public IActionResult GetAll()
         {
             var usuarios = _usuarioDbContext.Usuarios
+                        .Include(x => x.Rol)
+                        .Include(x => x.Votos)
                         .ToList();
 
             return Json(usuarios);
