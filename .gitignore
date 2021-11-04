@@ -2,4 +2,6 @@ bin/*
 obj/*
 .vs/*
 .vs
-appsettings.*
+.vscode/*
+appsettings.json
+appsettings.Development.json
