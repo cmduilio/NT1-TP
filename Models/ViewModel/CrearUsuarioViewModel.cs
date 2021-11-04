@@ -19,7 +19,6 @@ namespace tp.Models.ViewModel
         [Required]
         public int Rol { get; set; }
 
-        [Required]
         public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

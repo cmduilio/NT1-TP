@@ -35,6 +35,15 @@ namespace tp.Controllers
             return View(rolesVm);
         }
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var usuarios = _usuarioDbContext.Usuarios
+                        .ToList();
+
+            return Json(usuarios);
+        }
+
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioVm)
         {
@@ -69,7 +78,7 @@ namespace tp.Controllers
                     Rol = rolSeleccionado,
                 };
 
-                _usuarioDbContext.Usuarios.AddRange(usuario);
+                _usuarioDbContext.Usuarios.Add(usuario);
                 _usuarioDbContext.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }

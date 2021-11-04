@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using tp.Models;
 using tp.Database;
 
@@ -19,6 +20,15 @@ namespace tp.Controllers
             _juegoDbContext.Roles.Add(Rol);
             _juegoDbContext.SaveChanges();
             return Json(Rol);
+        }
+        
+
+        [HttpGet]
+        public IActionResult GetAll(){
+            var Roles = _juegoDbContext.Roles
+                                    .ToList();
+            
+            return Json(Roles);
         }
     }
 }
