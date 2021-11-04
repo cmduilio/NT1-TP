@@ -3,4 +3,5 @@ obj/*
 .vs/*
 .vs
 .vscode/*
-appsettings.*
+appsettings.json
+appsettings.Development.json
