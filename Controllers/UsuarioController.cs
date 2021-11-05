@@ -2,9 +2,11 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using tp.Database;
 using tp.Models;
 using tp.Models.ViewModel;
+
 
 namespace tp.Controllers
 {
@@ -33,6 +35,25 @@ namespace tp.Controllers
             };
 
             return View(rolesVm);
+        }
+
+        [HttpGet]
+        public IActionResult Ingresar()
+        {
+            var usuarioVM = new IngresarUsuarioViewModel{};
+
+            return View(usuarioVM);
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var usuarios = _usuarioDbContext.Usuarios
+                        .Include(x => x.Rol)
+                        .Include(x => x.Votos)
+                        .ToList();
+
+            return Json(usuarios);
         }
 
         [HttpPost]
@@ -69,7 +90,7 @@ namespace tp.Controllers
                     Rol = rolSeleccionado,
                 };
 
-                _usuarioDbContext.Usuarios.AddRange(usuario);
+                _usuarioDbContext.Usuarios.Add(usuario);
                 _usuarioDbContext.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
