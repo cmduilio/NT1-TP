@@ -2,21 +2,21 @@
 
 namespace tp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class AddInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Imagenes",
+                name: "Categorias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Imagenes", x => x.Id);
+                    table.PrimaryKey("PK_Categorias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,15 +43,16 @@ namespace tp.Migrations
                     CantidadVotosJugador = table.Column<int>(type: "int", nullable: false),
                     PuntajeTotalPeriodista = table.Column<double>(type: "float", nullable: false),
                     CantidadVotosPeriodista = table.Column<int>(type: "int", nullable: false),
-                    ImagenId = table.Column<int>(type: "int", nullable: true)
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
+                    Imagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Juegos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Juegos_Imagenes_ImagenId",
-                        column: x => x.ImagenId,
-                        principalTable: "Imagenes",
+                        name: "FK_Juegos_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categorias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -79,21 +80,44 @@ namespace tp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TiposJuego",
+                name: "Solicitudes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
+                    Imagen = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreadorId = table.Column<int>(type: "int", nullable: false),
+                    ResolutorId = table.Column<int>(type: "int", nullable: true),
+                    Aprobado = table.Column<bool>(type: "bit", nullable: false),
                     JuegoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TiposJuego", x => x.Id);
+                    table.PrimaryKey("PK_Solicitudes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TiposJuego_Juegos_JuegoId",
+                        name: "FK_Solicitudes_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categorias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Solicitudes_Juegos_JuegoId",
                         column: x => x.JuegoId,
                         principalTable: "Juegos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Solicitudes_Usuarios_CreadorId",
+                        column: x => x.CreadorId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Solicitudes_Usuarios_ResolutorId",
+                        column: x => x.ResolutorId,
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -126,14 +150,29 @@ namespace tp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Juegos_ImagenId",
+                name: "IX_Juegos_CategoriaId",
                 table: "Juegos",
-                column: "ImagenId");
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TiposJuego_JuegoId",
-                table: "TiposJuego",
+                name: "IX_Solicitudes_CategoriaId",
+                table: "Solicitudes",
+                column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Solicitudes_CreadorId",
+                table: "Solicitudes",
+                column: "CreadorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Solicitudes_JuegoId",
+                table: "Solicitudes",
                 column: "JuegoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Solicitudes_ResolutorId",
+                table: "Solicitudes",
+                column: "ResolutorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_RolId",
@@ -154,7 +193,7 @@ namespace tp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TiposJuego");
+                name: "Solicitudes");
 
             migrationBuilder.DropTable(
                 name: "Votos");
@@ -166,7 +205,7 @@ namespace tp.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Imagenes");
+                name: "Categorias");
 
             migrationBuilder.DropTable(
                 name: "Roles");

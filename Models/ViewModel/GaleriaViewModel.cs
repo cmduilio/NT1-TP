@@ -12,8 +12,8 @@ namespace tp.Models.ViewModel
 
         public double PuntajeTotalPeriodista { get; set; }
 
-        public Imagen Imagen { get; set; }
+        public string Imagen { get; set; }
 
-        public ICollection<TipoJuego> TiposJuego { get; set; } 
+        public Categoria Categoria { get; set; } 
     }
 }

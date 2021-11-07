@@ -51,6 +51,8 @@ namespace tp.Controllers
             var usuarios = _usuarioDbContext.Usuarios
                         .Include(x => x.Rol)
                         .Include(x => x.Votos)
+                        .Include(x => x.SolicitudesEmitidas)
+                        .Include(x => x.SolicitudesResueltas)
                         .ToList();
 
             return Json(usuarios);
