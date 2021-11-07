@@ -170,8 +170,8 @@ namespace tp.Migrations
                     b.Property<int?>("JuegoId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Puntaje")
-                        .HasColumnType("real");
+                    b.Property<int>("Puntaje")
+                        .HasColumnType("int");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
