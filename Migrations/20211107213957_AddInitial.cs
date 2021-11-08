@@ -129,7 +129,7 @@ namespace tp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JuegoId = table.Column<int>(type: "int", nullable: true),
-                    Puntaje = table.Column<float>(type: "real", nullable: false),
+                    Puntaje = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

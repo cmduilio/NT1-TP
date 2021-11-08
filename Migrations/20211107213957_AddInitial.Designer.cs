@@ -10,7 +10,7 @@ using tp.Database;
 namespace tp.Migrations
 {
     [DbContext(typeof(JuegoDbContext))]
-    [Migration("20211107200716_AddInitial")]
+    [Migration("20211107213957_AddInitial")]
     partial class AddInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,8 +172,8 @@ namespace tp.Migrations
                     b.Property<int?>("JuegoId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Puntaje")
-                        .HasColumnType("real");
+                    b.Property<int>("Puntaje")
+                        .HasColumnType("int");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
