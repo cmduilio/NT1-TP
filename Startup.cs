@@ -1,4 +1,8 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Xml.Schema;
+using System.Net.Mime;
+using System;
+using System.ComponentModel.Design;
+using System.Net.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,18 +25,22 @@ namespace tp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //agrego la cookie copiada desde la clase
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
-                opciones => 
+                opciones =>
                 {
                     opciones.LoginPath = "/Usuario/Ingresar";
-                    opciones.AccessDeniedPath = "/home";
+                    opciones.AccessDeniedPath = "/Usuario/AccesoDenegado";
                     opciones.LogoutPath = "/Usuario/Salir";
                 }
+
             );
+
             services.AddControllersWithViews();
             services.AddDbContext<JuegoDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+                services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +69,7 @@ namespace tp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Juego}/{action=GetAll}/{id?}");
             });
 
             app.UseCookiePolicy();

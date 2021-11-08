@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">tp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Juego" asp-action="GetAll">tp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,17 +19,50 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Juego" asp-action="GetAll">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Juego" asp-action="GetAll">Ver Juegos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="CrearUsuario">Registrarse</a>
-                        </li>
+                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item"> 
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="">Tus Juegos</a>    
+                            </li>
+                             <li class="nav-item">
+                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="">Perfil</a>
+                            </li>
+                        }
                     </ul>
                 </div>
-            </div>
+            
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                             <ul class="navbar-nav flex-grow-1">
+                                 <li  class="nav-item float-right"> 
+                                       <a class="nav-link text-dark" asp-area="">@User.FindFirstValue(ClainTypes.GivenName)</a>
+                                 </li>
+                            
+                                <li  class="nav-item float-right">
+                                    <form asp-controller="Usuario" asp-action="Salir" method="post">
+                                        <button type="submit" class="nav-link text-danger">Salir</button>
+                                    </form>
+                                </li>
+                             </ul>
+                        </div>
+                    }
+                    else {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                              <ul class="navbar-nav flex-grow-1">
+                                 <li  class="nav-item"> 
+                                       <a class="nav-link text-warning border border-primary bg-light" asp-area="" asp-controller="Usuario" asp-action="Ingresar">Ingresar</a>
+                                 </li>
+                                 <li  class="nav-item"> 
+                                       <a class="nav-link text-warning border border-primary bg-light" asp-area="" asp-controller="Usuario" asp-action="CrearUsuario">Registrarse</a>
+                                 </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
         </nav>
     </header>
     <div class="container">

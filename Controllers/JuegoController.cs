@@ -44,9 +44,5 @@ namespace tp.Controllers
             return View(juegos);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }
