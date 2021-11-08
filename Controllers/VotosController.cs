@@ -18,23 +18,28 @@ namespace tp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] VotoViewModel votoViewModel)
         {
+            Juego Juego = _juegoDbContext.Juegos.Where(x => x.Id == votoViewModel.Juego.Id).FirstOrDefault(); 
+            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.Usuario.Id).FirstOrDefault(); 
             Voto Voto = new Voto
             {
-                Juego = votoViewModel.Juego,
+                Juego = Juego,
                 Puntaje = votoViewModel.Puntaje,
-                Usuario = votoViewModel.Usuario
+                Usuario = Usuario
             };
+
+            Usuario.Votos.Add(Voto);
 
             if (votoViewModel.Usuario.Rol.Nombre == "Periodista")
             {
-                votoViewModel.Juego.CantidadVotosPeriodista++;
-                votoViewModel.Juego.PuntajeTotalJugador += votoViewModel.Puntaje;
+                Juego.CantidadVotosPeriodista++;
+                Juego.PuntajeTotalPeriodista += votoViewModel.Puntaje;
             } else {
-                
+                Juego.CantidadVotosJugador++;
+                Juego.PuntajeTotalJugador += votoViewModel.Puntaje;
             }
 
             _juegoDbContext.Votos.Add(Voto);
-            _juegoDbContext.Juegos.Update(votoViewModel.Juego);
+            _juegoDbContext.Juegos.Update(Juego);
             _juegoDbContext.SaveChanges();
             return Json(Voto);
         }
