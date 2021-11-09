@@ -99,6 +99,10 @@ namespace tp.Controllers
             return View(rolesVm);
         }
 
+        public IActionResult AccesoDenegado() 
+        {
+            return View();
+        }
 
     }
 }
