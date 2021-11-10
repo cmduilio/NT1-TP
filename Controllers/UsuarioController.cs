@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+using System.Xml.Schema;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -94,7 +96,7 @@ namespace tp.Controllers
 
                 _usuarioDbContext.Usuarios.Add(usuario);
                 _usuarioDbContext.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("GetAll", "Juego");
             }
             return View(rolesVm);
         }
@@ -104,5 +106,35 @@ namespace tp.Controllers
             return View();
         }
 
+          [HttpGet]
+        public IActionResult GetMisJuegos()
+        {
+            var MisJuegos = _juegoDbContext.Juegos
+                                    .Include(x => x.Categoria)
+                                    .ToList();
+            
+            var juegos = JuegosCompletos.Select(x => new MisJuegosViewModel
+            {  
+                IdJuego = x.Id,
+                Nombre = x.Nombre,
+                PuntajeTotalJugador = x.CantidadVotosJugador != 0 ? x.PuntajeTotalJugador / x.CantidadVotosJugador : 0,
+                PuntajeTotalPeriodista = x.CantidadVotosPeriodista != 0 ? x.PuntajeTotalPeriodista / x.CantidadVotosPeriodista : 0,
+                Imagen = x.Imagen,
+                Categoria = x.Categoria
+            }).ToList();
+            return View(juegos);
+        }
+
+        public IActionResult Salir() 
+        {
+            return View();
+        }
+
+        public IActionResult Votar()
+        {
+            return View();
+        }
+
+      
     }
 }

@@ -22,6 +22,12 @@
                     </div>
                 </div>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                 <form asp-controller="Usuario" asp-action="Votar">
+               <button type="button" class="btn btn-primary">Votar</button>
+                </form>
+            }
         }
     </div>
 </div>
