@@ -29,18 +29,17 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult GetAll(){
             var JuegosCompletos = _juegoDbContext.Juegos
-                                    .Include(x => x.TiposJuego)
-                                    .Include(x => x.Imagen)
+                                    .Include(x => x.Categoria)
                                     .ToList();
             
             var juegos = JuegosCompletos.Select(x => new GaleriaViewModel
             {  
                 IdJuego = x.Id,
                 Nombre = x.Nombre,
-                PuntajeTotalJugador = x.PuntajeTotalJugador,
-                PuntajeTotalPeriodista = x.PuntajeTotalPeriodista,
+                PuntajeTotalJugador = x.CantidadVotosJugador != 0 ? x.PuntajeTotalJugador / x.CantidadVotosJugador : 0,
+                PuntajeTotalPeriodista = x.CantidadVotosPeriodista != 0 ? x.PuntajeTotalPeriodista / x.CantidadVotosPeriodista : 0,
                 Imagen = x.Imagen,
-                TiposJuego = x.TiposJuego
+                Categoria = x.Categoria
             }).ToList();
             return View(juegos);
         }

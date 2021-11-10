@@ -13,7 +13,7 @@ namespace tp.Models
         public Juego Juego { get; set; }
 
         [Required]
-        public float Puntaje { get; set; }
+        public int Puntaje { get; set; }
 
         [Required]
         public Usuario Usuario { get; set; }

@@ -19,20 +19,20 @@ namespace tp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("tp.Models.Imagen", b =>
+            modelBuilder.Entity("tp.Models.Categoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Imagenes");
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("tp.Models.Juego", b =>
@@ -48,8 +48,12 @@ namespace tp.Migrations
                     b.Property<int>("CantidadVotosPeriodista")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImagenId")
+                    b.Property<int?>("CategoriaId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -63,7 +67,7 @@ namespace tp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImagenId");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Juegos");
                 });
@@ -84,12 +88,25 @@ namespace tp.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("tp.Models.TipoJuego", b =>
+            modelBuilder.Entity("tp.Models.Solicitud", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Aprobado")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreadorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("JuegoId")
                         .HasColumnType("int");
@@ -98,11 +115,20 @@ namespace tp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ResolutorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("CreadorId");
 
                     b.HasIndex("JuegoId");
 
-                    b.ToTable("TiposJuego");
+                    b.HasIndex("ResolutorId");
+
+                    b.ToTable("Solicitudes");
                 });
 
             modelBuilder.Entity("tp.Models.Usuario", b =>
@@ -144,8 +170,8 @@ namespace tp.Migrations
                     b.Property<int?>("JuegoId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Puntaje")
-                        .HasColumnType("real");
+                    b.Property<int>("Puntaje")
+                        .HasColumnType("int");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
@@ -161,18 +187,40 @@ namespace tp.Migrations
 
             modelBuilder.Entity("tp.Models.Juego", b =>
                 {
-                    b.HasOne("tp.Models.Imagen", "Imagen")
+                    b.HasOne("tp.Models.Categoria", "Categoria")
                         .WithMany()
-                        .HasForeignKey("ImagenId");
+                        .HasForeignKey("CategoriaId");
 
-                    b.Navigation("Imagen");
+                    b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("tp.Models.TipoJuego", b =>
+            modelBuilder.Entity("tp.Models.Solicitud", b =>
                 {
-                    b.HasOne("tp.Models.Juego", null)
-                        .WithMany("TiposJuego")
+                    b.HasOne("tp.Models.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId");
+
+                    b.HasOne("tp.Models.Usuario", "Creador")
+                        .WithMany("SolicitudesEmitidas")
+                        .HasForeignKey("CreadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("tp.Models.Juego", "Juego")
+                        .WithMany()
                         .HasForeignKey("JuegoId");
+
+                    b.HasOne("tp.Models.Usuario", "Resolutor")
+                        .WithMany("SolicitudesResueltas")
+                        .HasForeignKey("ResolutorId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Creador");
+
+                    b.Navigation("Juego");
+
+                    b.Navigation("Resolutor");
                 });
 
             modelBuilder.Entity("tp.Models.Usuario", b =>
@@ -201,13 +249,12 @@ namespace tp.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("tp.Models.Juego", b =>
-                {
-                    b.Navigation("TiposJuego");
-                });
-
             modelBuilder.Entity("tp.Models.Usuario", b =>
                 {
+                    b.Navigation("SolicitudesEmitidas");
+
+                    b.Navigation("SolicitudesResueltas");
+
                     b.Navigation("Votos");
                 });
 #pragma warning restore 612, 618

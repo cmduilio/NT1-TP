@@ -24,5 +24,7 @@ namespace tp.Models
         public Rol Rol { get; set; }
 
         public ICollection<Voto> Votos { get; set; }
+        public ICollection<Solicitud> SolicitudesEmitidas { get; set; }
+        public ICollection<Solicitud> SolicitudesResueltas { get; set; }
     }
 }
