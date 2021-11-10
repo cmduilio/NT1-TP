@@ -1,8 +1,4 @@
-using System.Xml.Schema;
-using System.Net.Mime;
-using System;
-using System.ComponentModel.Design;
-using System.Net.Security;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -38,9 +34,6 @@ namespace tp
             services.AddControllersWithViews();
             services.AddDbContext<JuegoDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-                services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
