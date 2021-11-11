@@ -1,8 +1,4 @@
-using System.Xml.Schema;
-using System.Net.Mime;
-using System;
-using System.ComponentModel.Design;
-using System.Net.Security;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
