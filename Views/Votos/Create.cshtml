@@ -1,0 +1,41 @@
+@model tp.Models.ViewModel.VotoViewModel;
+
+@{
+    ViewData["Title"] = "Crear voto";
+}
+
+<div class="col-md-4 col-sm-12">
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.Juego.Imagen" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Juego.Nombre</h5>
+            <h6 class="TipoJuegos">@Model.Juego.Categoria.Nombre</h6>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h6 class="PuntajeTotalJugador">Puntaje segun Jugadores: @Model.Juego.PuntajeTotalJugador</h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h6 class="PuntajeTotalPeriodista">Puntaje segun Periodistas: @Model.Juego.PuntajeTotalPeriodista</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+            <form asp-action="CrearUsuario">
+            <div asp-validation-summary= "ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Puntaje" class="control-label"></label>
+                <input asp-for="Puntaje" class="form-control">
+                <span asp-validation-for="Puntaje" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar Voto" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>

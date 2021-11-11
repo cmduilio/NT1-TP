@@ -1,8 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using tp.Models;
 using tp.Models.ViewModel;
 using tp.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace tp.Controllers
 {
@@ -13,6 +14,20 @@ namespace tp.Controllers
         public VotosController(JuegoDbContext juegoDbContext)
         {
             _juegoDbContext = juegoDbContext;
+        }
+
+        [HttpGet]
+        public IActionResult Create(int IdJuego, int IdUsuario)
+        {
+            Juego juego = _juegoDbContext.Juegos.Where(x=> x.Id == IdJuego).Include(x=>x.Categoria).FirstOrDefault();
+            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == IdUsuario).FirstOrDefault(); 
+            var votoVm = new VotoViewModel
+            {
+                IdJuego = juego.Id,
+                Juego = juego,
+                Usuario = Usuario,
+            };
+            return View(votoVm);
         }
 
         [HttpPost]

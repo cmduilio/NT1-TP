@@ -58,6 +58,27 @@ namespace tp.Controllers
             return Json(usuarios);
         }
 
+        [HttpGet]
+        public IActionResult VerDatos(int userId)
+        {
+            var usuario = _usuarioDbContext.Usuarios.Where(x => x.Id == userId)
+                        .Include(x => x.Rol)
+                        .Include(x => x.Votos)
+                        .Include(x => x.SolicitudesEmitidas)
+                        .Include(x => x.SolicitudesResueltas).FirstOrDefault();
+            var verDatos = new VerDatosViewModel
+            {
+                IdUsuario = usuario.Id,
+                Nombre = usuario.Nombre,
+                Email = usuario.Email,
+                Rol = usuario.Rol,
+                Votos = usuario.Votos,
+                SolicitudesEmitidas = usuario.SolicitudesEmitidas,
+                SolicitudesResueltas = usuario.SolicitudesResueltas,
+            };
+            return View(verDatos);
+        }
+
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioVm)
         {
