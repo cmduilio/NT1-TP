@@ -22,9 +22,9 @@ namespace tp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+       //  This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 opciones =>
                 {
@@ -38,9 +38,6 @@ namespace tp
             services.AddControllersWithViews();
             services.AddDbContext<JuegoDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-                services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +49,7 @@ namespace tp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Juego/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
