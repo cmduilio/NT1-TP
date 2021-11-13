@@ -27,7 +27,8 @@ namespace tp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll(){
+        public IActionResult GetAll()
+        {
             var JuegosCompletos = _juegoDbContext.Juegos
                                     .Include(x => x.Categoria)
                                     .ToList();
@@ -44,9 +45,7 @@ namespace tp.Controllers
             return View(juegos);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+       
+
     }
 }

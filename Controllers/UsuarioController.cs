@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,17 +11,17 @@ namespace tp.Controllers
 {
     public class UsuarioController : Controller
     {
-        private JuegoDbContext _usuarioDbContext;
+        private JuegoDbContext _juegoDbContext;
 
         public UsuarioController(JuegoDbContext usuarioDbContext)
         {
-            this._usuarioDbContext = usuarioDbContext;
+            this._juegoDbContext = usuarioDbContext;
         }
 
         [HttpGet]
         public IActionResult CrearUsuario()
         {
-            var roles = _usuarioDbContext.Roles
+            var roles = _juegoDbContext.Roles
                         .Select(x => new SelectListItem
                         {
                             Text = x.Nombre,
@@ -48,7 +47,7 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var usuarios = _usuarioDbContext.Usuarios
+            var usuarios = _juegoDbContext.Usuarios
                         .Include(x => x.Rol)
                         .Include(x => x.Votos)
                         .Include(x => x.SolicitudesEmitidas)
@@ -61,7 +60,7 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult VerDatos(int userId)
         {
-            var usuario = _usuarioDbContext.Usuarios.Where(x => x.Id == userId)
+            var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == userId)
                         .Include(x => x.Rol)
                         .Include(x => x.Votos)
                         .Include(x => x.SolicitudesEmitidas)
@@ -82,7 +81,7 @@ namespace tp.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioVm)
         {
-            var roles = _usuarioDbContext.Roles
+            var roles = _juegoDbContext.Roles
             .Select(x => new SelectListItem
             {
                 Text = x.Nombre,
@@ -97,7 +96,7 @@ namespace tp.Controllers
             if (ModelState.IsValid)
             {
                 //falta el insert de roles para que no se rompa
-                var rolSeleccionado = _usuarioDbContext.Roles.Where(x => x.Id == usuarioVm.Rol).FirstOrDefault();
+                var rolSeleccionado = _juegoDbContext.Roles.Where(x => x.Id == usuarioVm.Rol).FirstOrDefault();
 
                 //¿si no selecciona rol: redirije al home, salta error o qué hacemos?
                 if (rolSeleccionado == null)
@@ -113,11 +112,47 @@ namespace tp.Controllers
                     Rol = rolSeleccionado,
                 };
 
-                _usuarioDbContext.Usuarios.Add(usuario);
-                _usuarioDbContext.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                _juegoDbContext.Usuarios.Add(usuario);
+                _juegoDbContext.SaveChanges();
+                return RedirectToAction("GetAll", "Juego");
             }
             return View(rolesVm);
+        }
+
+        public IActionResult AccesoDenegado() 
+        {
+            return View();
+        }
+
+          [HttpGet]
+        public IActionResult GetMisJuegos()
+        {
+            var MisJuegos = _juegoDbContext.Juegos
+                                    .Include(x => x.Categoria)
+                                    .ToList();
+            
+            var juegos = _juegoDbContext.Juegos
+                .Include(x => x.Categoria)
+                .Select(x => new MisJuegosViewModel
+                {  
+                    IdJuego = x.Id,
+                    Nombre = x.Nombre,
+                    PuntajeTotalJugador = x.CantidadVotosJugador != 0 ? x.PuntajeTotalJugador / x.CantidadVotosJugador : 0,
+                    PuntajeTotalPeriodista = x.CantidadVotosPeriodista != 0 ? x.PuntajeTotalPeriodista / x.CantidadVotosPeriodista : 0,
+                    Imagen = x.Imagen,
+                    Categoria = x.Categoria
+                }).ToList();
+            return View(juegos);
+        }
+
+        public IActionResult Salir() 
+        {
+            return View();
+        }
+
+        public IActionResult Votar()
+        {
+            return View();
         }
     }
 }
