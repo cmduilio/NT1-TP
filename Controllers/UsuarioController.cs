@@ -13,9 +13,9 @@ namespace tp.Controllers
     {
         private JuegoDbContext _juegoDbContext;
 
-        public UsuarioController(JuegoDbContext usuarioDbContext)
+        public UsuarioController(JuegoDbContext juegoDbContext)
         {
-            this._juegoDbContext = usuarioDbContext;
+            this._juegoDbContext = juegoDbContext;
         }
 
         [HttpGet]
@@ -124,7 +124,7 @@ namespace tp.Controllers
             return View();
         }
 
-          [HttpGet]
+        [HttpGet]
         public IActionResult GetMisJuegos()
         {
             var MisJuegos = _juegoDbContext.Juegos

@@ -16,6 +16,6 @@ namespace tp.Models
         public int Puntaje { get; set; }
 
         [Required]
-        public Usuario Usuario { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

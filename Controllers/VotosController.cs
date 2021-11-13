@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using tp.Models;
 using tp.Models.ViewModel;
@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace tp.Controllers
 {
-    public class VotosController : Controller
+    public class VotoController : Controller
     {
         private JuegoDbContext _juegoDbContext;
 
-        public VotosController(JuegoDbContext juegoDbContext)
+        public VotoController(JuegoDbContext juegoDbContext)
         {
             _juegoDbContext = juegoDbContext;
         }
@@ -41,7 +41,7 @@ namespace tp.Controllers
             {
                 Juego = Juego,
                 Puntaje = votoViewModel.Puntaje,
-                Usuario = Usuario
+                IdUsuario = Usuario.Id
             };
 
             Usuario.Votos.Add(Voto);
@@ -73,7 +73,7 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult GetAll(int UsuarioId){
             var Votos = _juegoDbContext.Votos
-                                    .Where(x => x.Usuario.Id == UsuarioId)
+                                    .Where(x => x.IdUsuario == UsuarioId)
                                     .FirstOrDefault();
             
             return Json(Votos);
