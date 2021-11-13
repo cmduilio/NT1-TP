@@ -60,7 +60,7 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult VerDatos(int userId)
         {
-            var usuario = _usuarioDbContext.Usuarios.Where(x => x.Id == userId)
+            var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == userId)
                         .Include(x => x.Rol)
                         .Include(x => x.Votos)
                         .Include(x => x.SolicitudesEmitidas)
