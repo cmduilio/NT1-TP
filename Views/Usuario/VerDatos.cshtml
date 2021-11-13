@@ -1,0 +1,36 @@
+@model tp.Models.ViewModel.VerDatosViewModel;
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <h6 class="Nombre">Nombre: @Model.Nombre<i class="fas fa-signature"></i></label></h6>
+            <p></p>
+            <h6 class="Email">Email: @Model.Email<i class="fas fa-envelope"></i></h6>
+            <p></p>
+            <h6 class="Rol">Rol: @Model.Rol.Nombre</h6>
+            <p></p>
+            <h6 class="Votos">Votos: </h6>
+            @foreach (var item in @Model.Votos)
+            {
+                <h5 class="Nombre Juego Voto">Juego: @item.Juego.Nombre</h5>
+                <h5 class="Puntaje">Puntaje: @item.Puntaje</h5>
+            }
+            <p></p>
+            <h6 class="Solicitudes Emitidas">Solicitudes emitidas:</h6>
+            @foreach (var item in @Model.SolicitudesEmitidas)
+            {
+                <h5 class="Nombre Solicitud">Nombre de la solicitud: @item.Nombre</h5>
+                <h5 class="Nombre Juego Voto"> Nombre del juego: @item.Juego.Nombre</h5>
+                <h5 class="Estado">Aprobada: @item.Aprobado</h5>
+            }
+            <p></p>
+            <h6 class="Solicitudes Emitidas">Solicitudes resueltas:</h6>
+            @foreach (var item in @Model.SolicitudesResueltas)
+            {
+                <h5 class="Nombre Solicitud">Nombre de la solicitud: @item.Nombre</h5>
+                <h5 class="Nombre Juego Voto"> Nombre del juego: @item.Juego.Nombre</h5>
+                <h5 class="Estado">Resolución: @item.Aprobado</h5>
+            }
+        </div>
+    </div>
+</div>

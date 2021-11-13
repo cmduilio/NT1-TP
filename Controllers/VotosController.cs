@@ -1,8 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using tp.Models;
 using tp.Models.ViewModel;
 using tp.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace tp.Controllers
 {
@@ -15,11 +16,27 @@ namespace tp.Controllers
             _juegoDbContext = juegoDbContext;
         }
 
+        [HttpGet]
+        public IActionResult Create(int IdJuego, int IdUsuario)
+        {
+            Juego juego = _juegoDbContext.Juegos.Where(x=> x.Id == IdJuego).Include(x=>x.Categoria).FirstOrDefault();
+            juego.PuntajeTotalPeriodista = juego.CantidadVotosPeriodista != 0 ? juego.PuntajeTotalPeriodista / juego.CantidadVotosPeriodista : 0;
+            juego.PuntajeTotalJugador = juego.CantidadVotosJugador != 0 ? juego.PuntajeTotalJugador / juego.CantidadVotosJugador : 0;
+            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == IdUsuario).FirstOrDefault(); 
+            var votoVm = new VotoViewModel
+            {
+                IdJuego = IdJuego,
+                Juego = juego,
+                Usuario = Usuario,
+            };
+            return View(votoVm);
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] VotoViewModel votoViewModel)
         {
             Juego Juego = _juegoDbContext.Juegos.Where(x => x.Id == votoViewModel.Juego.Id).FirstOrDefault(); 
-            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.Usuario.Id).FirstOrDefault(); 
+            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.Usuario.Id).Include(x=> x.Votos).FirstOrDefault(); 
             Voto Voto = new Voto
             {
                 Juego = Juego,

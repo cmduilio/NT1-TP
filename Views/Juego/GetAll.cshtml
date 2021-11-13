@@ -6,7 +6,7 @@
         {
             <div class="col-md-4 col-sm-12">
                 <div class="card" style="width: 18rem;">
-                    <img src="@item.Imagen" class="card-img-top">
+                    <img src="@item.Imagen" class="card-img-top embed-responsive-item">
                     <div class="card-body">
                         <h5 class="card-title">@item.Nombre</h5>
                         <h6 class="TipoJuegos">@item.Categoria.Nombre</h6>
@@ -17,6 +17,12 @@
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <h6 class="PuntajeTotalPeriodista">Puntaje segun Periodistas: @item.PuntajeTotalPeriodista</h6>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Votos" asp-action="Create" asp-route-IdJuego="@item.IdJuego" asp-route-IdUsuario="1">Votar</a>
                             </div>
                         </div>
                     </div>
