@@ -1,4 +1,8 @@
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -147,11 +151,51 @@ namespace tp.Controllers
 
         public IActionResult Salir() 
         {
-            return View();
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Ingresar", "Usuario");
         }
 
         public IActionResult Votar()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Ingresar(string usuario, string password) {
+
+            // Validamos que hayan ingresado el usuario y contraseña
+            if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(password)) {
+                // Verificamos que exista el usuario
+                var user =  _juegoDbContext.Usuarios.Include(x=>x.Rol).FirstOrDefault(u => u.Nombre == usuario);
+                if (user != null) {
+                    // Validamos que coincida la contraseña
+                    var contrasenia = Encoding.UTF8.GetBytes(password);
+
+                    if (password.SequenceEqual(user.Password)) {
+
+                        // Creamos los Claims (credencial de acceso con informacion del usuario)
+                        ClaimsIdentity identidad = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        // Agregamos a la credencial el nombre de usuario
+                        identidad.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));
+                        // Agregamos a la credencial el nombre del estudiante/administrador
+                        identidad.AddClaim(new Claim(ClaimTypes.GivenName, user.Nombre));
+                        // Agregamos a la credencial el Rol
+                        identidad.AddClaim(new Claim(ClaimTypes.Role, user.Rol.Nombre));
+
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identidad);
+
+                        // Ejecutamos el Login
+                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                                             
+                        // Redirigimos a la pagina principal
+                        return RedirectToAction("Getall", "Juego");
+                    }                    
+                }
+            }
+
+            ViewBag.ErrorEnLogin = "Verifique el usuario y contraseña";
             return View();
         }
     }

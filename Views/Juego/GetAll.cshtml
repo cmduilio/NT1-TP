@@ -21,19 +21,16 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-12">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Votos" asp-action="Create" asp-route-IdJuego="@item.IdJuego" asp-route-IdUsuario="1">Votar</a>
-                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="col-md-6 col-sm-12">
+                                    <a class="btn btn-primary" asp-area="" asp-controller="Voto" asp-action="Create" asp-route-IdJuego="@item.IdJuego" asp-route-IdUsuario="@User.FindFirstValue(ClaimTypes.Name)">Votar</a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                 <form asp-controller="Usuario" asp-action="Votar">
-               <button type="button" class="btn btn-primary">Votar</button>
-                </form>
-            }
         }
     </div>
 </div>

@@ -33,7 +33,7 @@ namespace tp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] VotoViewModel votoViewModel)
+        public IActionResult Create(VotoViewModel votoViewModel)
         {
             Juego Juego = _juegoDbContext.Juegos.Where(x => x.Id == votoViewModel.Juego.Id).FirstOrDefault(); 
             Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.Usuario.Id).Include(x=> x.Votos).FirstOrDefault(); 
