@@ -33,6 +33,13 @@
                                  <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="">Perfil</a>
                             </li>
                         }
+                        if (User.Identity == "Administrador")
+                        {
+                             <li class="nav-item"> 
+                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Agregar Juego</a>    
+                            </li>
+                        }
+
                     </ul>
                 </div>
             
