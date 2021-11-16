@@ -167,13 +167,16 @@ namespace tp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
                     b.Property<int?>("JuegoId")
                         .HasColumnType("int");
 
                     b.Property<int>("Puntaje")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -238,15 +241,11 @@ namespace tp.Migrations
                         .WithMany()
                         .HasForeignKey("JuegoId");
 
-                    b.HasOne("tp.Models.Usuario", "Usuario")
+                    b.HasOne("tp.Models.Usuario", null)
                         .WithMany("Votos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Juego");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("tp.Models.Usuario", b =>

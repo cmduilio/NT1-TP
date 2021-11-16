@@ -11,18 +11,17 @@
         <form asp-action="Ingresar">
             <div class="text-danger">@ViewBag.ErrorEnLogin</div>
             <div class="form-group">
-                <label for="Usuario" class="control-label">Usuario</label>
-                <input name="Usuario" class="form-control"/>
+                <label for="Usuario" class="control-label">Nombre</label>
+                <input name="Usuario" asp-for="Nombre" class="form-control"/>
             </div>
 
             <div class="form-group">
-                <label for="Password" class="control-label">Password</label>
-                <input name="Password" class="form-control"/>
+                <label for="Password" class="control-label" >Password</label>
+                <input name="Password" class="form-control" asp-for="Password" type="password"/>
             </div>
 
             <div class="form-group">
                 <input type="submit" value="Ingresar" class="btn btn-primary"/>
-                <a class="btn btn-success" asp-action="CrearUsuario">Registrarse</a>
             </div>
         </form>
     </div>
