@@ -82,6 +82,58 @@ namespace tp.Controllers
             return View(verDatos);
         }
 
+        [HttpGet]
+        public IActionResult SolicitarJuego()
+        {
+            var categorias = _juegoDbContext.Categorias
+            .Select(x => new SelectListItem
+                {
+                    Text = x.Nombre,
+                    Value = x.Id.ToString()
+                })
+                .ToList();
+            var categoriaVm = new SolicitarJuegoViewModel
+            {
+                Categorias = categorias,
+            };
+
+            return View(categoriaVm);
+        }
+
+        [HttpPost]
+        public IActionResult SolicitarJuego([FromBody] SolicitarJuegoViewModel solicitarVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var categoriaSeleccionada = _juegoDbContext.Categorias.Where(x => x.Id == solicitarVm.Categoria).FirstOrDefault();
+                var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == solicitarVm.Id).FirstOrDefault();
+                var juego = new Juego
+                {
+                    Nombre = solicitarVm.Nombre,
+                    PuntajeTotalJugador = 0,
+                    CantidadVotosJugador = 0,
+                    PuntajeTotalPeriodista = 0,
+                    CantidadVotosPeriodista = 0,
+                    Categoria = categoriaSeleccionada,
+                    Imagen = solicitarVm.Imagen,
+                };
+                var solicitud = new Solicitud
+                {
+                    Nombre = solicitarVm.Nombre,
+                    Categoria = categoriaSeleccionada,
+                    Imagen = solicitarVm.Imagen,
+                    Creador = usuario,
+                    Resolutor = null,
+                    Aprobado = false,
+                    Juego = juego,
+                };
+                usuario.SolicitudesEmitidas.Add(solicitud);
+                _juegoDbContext.Solicitudes.Add(solicitud);
+                _juegoDbContext.SaveChanges();
+                return View();
+            }
+        }
+
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioVm)
         {
@@ -99,14 +151,14 @@ namespace tp.Controllers
             };
             if (ModelState.IsValid)
             {
-                //falta el insert de roles para que no se rompa
                 var rolSeleccionado = _juegoDbContext.Roles.Where(x => x.Id == usuarioVm.Rol).FirstOrDefault();
 
+                //esto q comente creo q se puede sacar no?
                 //¿si no selecciona rol: redirije al home, salta error o qué hacemos?
-                if (rolSeleccionado == null)
-                {
-                    return View();
-                }
+                //if (rolSeleccionado == null)
+                //{
+                    //return View();
+                //}
 
                 var usuario = new Usuario
                 {
