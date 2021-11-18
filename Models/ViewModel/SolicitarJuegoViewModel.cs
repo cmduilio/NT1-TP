@@ -6,7 +6,7 @@ namespace tp.Models.ViewModel
 {
     public class SolicitarJuegoViewModel
     {
-        public int IdUser { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El Nombre es un campo obligatorio.")]
         [MaxLength(20, ErrorMessage = "El maximo permitido es 20 caracteres.")]

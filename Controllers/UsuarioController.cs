@@ -130,8 +130,9 @@ namespace tp.Controllers
                 usuario.SolicitudesEmitidas.Add(solicitud);
                 _juegoDbContext.Solicitudes.Add(solicitud);
                 _juegoDbContext.SaveChanges();
-                return View();
+                return RedirectToAction("VerDatos");
             }
+            return RedirectToAction("Ingresar");
         }
 
         [HttpPost]
