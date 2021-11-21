@@ -54,7 +54,6 @@ namespace tp.Controllers
         public IActionResult GetAll()
         {
             var usuarios = _juegoDbContext.Usuarios
-                        .Include(x => x.Rol)
                         .Include(x => x.Votos)
                         .Include(x => x.SolicitudesEmitidas)
                         .Include(x => x.SolicitudesResueltas)
@@ -67,7 +66,6 @@ namespace tp.Controllers
         public IActionResult VerDatos(int userId)
         {
             var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == userId)
-                        .Include(x => x.Rol)
                         .Include(x => x.Votos)
                         .Include(x => x.SolicitudesEmitidas)
                         .Include(x => x.SolicitudesResueltas).FirstOrDefault();
@@ -107,18 +105,9 @@ namespace tp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var categoriaSeleccionada = _juegoDbContext.Categorias.Where(x => x.Id == solicitarVm.Categoria).FirstOrDefault();
-                var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == solicitarVm.Id).FirstOrDefault();
-                var juego = new Juego
-                {
-                    Nombre = solicitarVm.Nombre,
-                    PuntajeTotalJugador = 0,
-                    CantidadVotosJugador = 0,
-                    PuntajeTotalPeriodista = 0,
-                    CantidadVotosPeriodista = 0,
-                    Categoria = categoriaSeleccionada,
-                    Imagen = solicitarVm.Imagen,
-                };
+                var categoriaSeleccionada = _juegoDbContext.Categorias.Where(x => x.Id == solicitarVm.IdCategoria).FirstOrDefault();
+                var usuario = _juegoDbContext.Usuarios.Where(x => x.Id == solicitarVm.IdCreador).FirstOrDefault();
+                
                 var solicitud = new Solicitud
                 {
                     Nombre = solicitarVm.Nombre,
@@ -127,14 +116,12 @@ namespace tp.Controllers
                     Creador = usuario,
                     Resolutor = null,
                     Aprobado = false,
-                    Juego = juego,
+                    Juego = null,
                 };
-                usuario.SolicitudesEmitidas.Add(solicitud);
                 _juegoDbContext.Solicitudes.Add(solicitud);
                 _juegoDbContext.SaveChanges();
-                return RedirectToAction("VerDatos");
             }
-            return RedirectToAction("Ingresar");
+            return RedirectToAction("GetAll", "Juego");
         }
 
         [HttpPost]
@@ -152,10 +139,13 @@ namespace tp.Controllers
             {
                 Roles = Roles,
             };
+            
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
             if (ModelState.IsValid)
             {
-                var rolSeleccionado = (Rol) usuarioVm.Rol;
-
+                Rol rolSeleccionado;
+                Enum.TryParse(usuarioVm.Rol, out rolSeleccionado);
                 var usuario = new Usuario
                 {
                     Nombre = usuarioVm.Nombre,
@@ -215,7 +205,7 @@ namespace tp.Controllers
             // Validamos que hayan ingresado el usuario y contraseña
             if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(password)) {
                 // Verificamos que exista el usuario
-                var user =  _juegoDbContext.Usuarios.Include(x=>x.Rol).FirstOrDefault(u => u.Nombre == usuario);
+                var user =  _juegoDbContext.Usuarios.FirstOrDefault(u => u.Nombre == usuario);
                 if (user != null) {
                     // Validamos que coincida la contraseña
                     var contrasenia = Encoding.UTF8.GetBytes(password);

@@ -13,15 +13,19 @@ namespace tp.Models.ViewModel
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "La Categoria es un campo obligatorio.")]
-        public int Categoria {get; set; }
+        public int IdCategoria {get; set; }
+
+        public Categoria Categoria {get;set;}
         
         public IEnumerable<SelectListItem> Categorias { get; set; }
 
         [Required(ErrorMessage = "La Imagen es un campo obligatorio.")]
         public string Imagen { get; set; }
         
+        public int IdCreador { get; set; }
         public Usuario Creador { get; set; }
 
+        public bool Aprobado { get; set; }
         public Juego Juego { get; set; }
     }
 }

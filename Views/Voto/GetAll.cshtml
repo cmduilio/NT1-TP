@@ -1,0 +1,35 @@
+@model List<tp.Models.ViewModel.VotoViewModel>;
+
+@{
+    ViewData["Title"] = "Solicitar Juego";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-12">
+                <div class="card" style="width: 18rem;">
+                    <img src="@item.Juego.Imagen" class="card-img-top embed-responsive-item">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Juego.Nombre</h5>
+                        <h6 class="TipoJuegos">@item.Juego.Categoria.Nombre</h6>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h6 class="PuntajeTotalJugador">Puntaje segun Jugadores: @item.Juego.PuntajeTotalJugador</h6>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h6 class="PuntajeTotalPeriodista">Puntaje segun Periodistas: @item.Juego.PuntajeTotalPeriodista</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h6 class="MiPuntaje">Mi Puntaje: @item.Puntaje</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

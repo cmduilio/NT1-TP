@@ -35,8 +35,8 @@ namespace tp.Controllers
         [HttpPost]
         public IActionResult Create(VotoViewModel votoViewModel)
         {
-            Juego Juego = _juegoDbContext.Juegos.Where(x => x.Id == votoViewModel.Juego.Id).FirstOrDefault(); 
-            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.Usuario.Id).Include(x=> x.Votos).FirstOrDefault(); 
+            Juego Juego = _juegoDbContext.Juegos.Where(x => x.Id == votoViewModel.IdJuego).FirstOrDefault(); 
+            Usuario Usuario = _juegoDbContext.Usuarios.Where(x => x.Id == votoViewModel.IdUsuario).Include(x=> x.Votos).FirstOrDefault(); 
             Voto Voto = new Voto
             {
                 Juego = Juego,
@@ -46,7 +46,7 @@ namespace tp.Controllers
 
             Usuario.Votos.Add(Voto);
 
-            if (votoViewModel.Usuario.Rol == Rol.PERIODISTA)
+            if (Usuario.Rol == Rol.PERIODISTA)
             {
                 Juego.CantidadVotosPeriodista++;
                 Juego.PuntajeTotalPeriodista += votoViewModel.Puntaje;
@@ -58,25 +58,22 @@ namespace tp.Controllers
             _juegoDbContext.Votos.Add(Voto);
             _juegoDbContext.Juegos.Update(Juego);
             _juegoDbContext.SaveChanges();
-            return Json(Voto);
-        }
-        
-
-        [HttpGet]
-        public IActionResult GetAll(){
-            var Votos = _juegoDbContext.Votos
-                                    .ToList();
-            
-            return Json(Votos);
+            return RedirectToAction("GetAll", "Juego");
         }
 
         [HttpGet]
-        public IActionResult GetAll(int UsuarioId){
+        public IActionResult GetAll(int IdUsuario){
             var Votos = _juegoDbContext.Votos
-                                    .Where(x => x.IdUsuario == UsuarioId)
-                                    .FirstOrDefault();
-            
-            return Json(Votos);
+                                    .Where(x => x.IdUsuario == IdUsuario)
+                                    .Include(x => x.Juego)
+                                    .Include(x => x.Juego.Categoria)
+                                    .Select(x => new VotoViewModel{
+                                        IdJuego = x.Juego.Id,
+                                        Juego = x.Juego,
+                                        Puntaje = x.Puntaje,
+                                        IdUsuario = IdUsuario
+                                    }).ToList();
+            return View(Votos);
         }
     }
 }

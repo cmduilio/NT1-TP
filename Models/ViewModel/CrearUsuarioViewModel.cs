@@ -18,7 +18,7 @@ namespace tp.Models.ViewModel
         public string Email { get; set; }
 
         [Required]
-        public int Rol { get; set; }
+        public string Rol { get; set; }
 
         public IEnumerable<SelectListItem> Roles { get; set; }
     }

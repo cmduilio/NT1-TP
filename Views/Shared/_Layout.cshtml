@@ -26,16 +26,20 @@
                         
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item"> 
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="GetMisJuegos">Tus Juegos</a>    
-                            </li>
-                             <li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="">Perfil</a>
-                            </li>
                             @if (@User.FindFirstValue(ClaimTypes.Role) != Rol.ADMIN.ToString())
                             {
                                 <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Voto" asp-action="GetAll" asp-route-IdUsuario="@User.FindFirstValue(ClaimTypes.Name)">Mis Votos</a>    
+                                </li>
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Solicitud" asp-action="GetAll" asp-route-IdUsuario="@User.FindFirstValue(ClaimTypes.Name)">Mis Solicitudes</a>    
+                                </li>
+                                <li class="nav-item"> 
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="SolicitarJuego">Agregar Juego</a>    
+                                </li>
+                            } else {
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Solicitud" asp-action="GetAll">Ver Solicitudes</a>    
                                 </li>
                             }
                         }
