@@ -32,12 +32,13 @@
                              <li class="nav-item">
                                  <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="">Perfil</a>
                             </li>
-                        }
-                        if (User.Identity == "Administrador")
-                        {
-                             <li class="nav-item"> 
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Agregar Juego</a>    
-                            </li>
+                            
+                            @if (@User.FindFirstValue(ClaimTypes.Role) != Rol.ADMIN.ToString())
+                            {
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="SolicitarJuego">Agregar Juego</a>    
+                                </li>
+                            }
                         }
 
                     </ul>
@@ -58,8 +59,7 @@
                                 </li>
                              </ul>
                         </div>
-                    }
-                    else {
+                    } else {
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                               <ul class="navbar-nav flex-grow-1">
                                  <li  class="nav-item"> 

@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using tp.Database;
 using tp.Models;
 using tp.Models.ViewModel;
-
+using System;
+using System.Collections.Generic;
 
 namespace tp.Controllers
 {
@@ -25,16 +26,17 @@ namespace tp.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {
-            var roles = _juegoDbContext.Roles
-                        .Select(x => new SelectListItem
-                        {
-                            Text = x.Nombre,
-                            Value = x.Id.ToString()
-                        })
-                        .ToList();
+            var Roles = new List<SelectListItem>();
+            foreach(Rol rol in Enum.GetValues(typeof(Rol))){
+                Roles.Add(new SelectListItem{
+                    Text = rol.ToString(),
+                    Value = rol.ToString()
+                });
+            }
+
             var rolesVm = new CrearUsuarioViewModel
             {
-                Roles = roles,
+                Roles = Roles
             };
 
             return View(rolesVm);
@@ -101,7 +103,7 @@ namespace tp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SolicitarJuego([FromBody] SolicitarJuegoViewModel solicitarVm)
+        public IActionResult SolicitarJuego(SolicitarJuegoViewModel solicitarVm)
         {
             if (ModelState.IsValid)
             {
@@ -138,21 +140,21 @@ namespace tp.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioVm)
         {
-            var roles = _juegoDbContext.Roles
-            .Select(x => new SelectListItem
-            {
-                Text = x.Nombre,
-                Value = x.Id.ToString()
-            })
-            .ToList();
+            var Roles = new List<SelectListItem>();
+            foreach(Rol rol in Enum.GetValues(typeof(Rol))){
+                Roles.Add(new SelectListItem{
+                    Text = rol.ToString(),
+                    Value = rol.ToString()
+                });
+            }
 
             var rolesVm = new CrearUsuarioViewModel
             {
-                Roles = roles,
+                Roles = Roles,
             };
             if (ModelState.IsValid)
             {
-                var rolSeleccionado = _juegoDbContext.Roles.Where(x => x.Id == usuarioVm.Rol).FirstOrDefault();
+                var rolSeleccionado = (Rol) usuarioVm.Rol;
 
                 //esto q comente creo q se puede sacar no?
                 //¿si no selecciona rol: redirije al home, salta error o qué hacemos?
@@ -235,7 +237,7 @@ namespace tp.Controllers
                         // Agregamos a la credencial el nombre del estudiante/administrador
                         identidad.AddClaim(new Claim(ClaimTypes.GivenName, user.Nombre));
                         // Agregamos a la credencial el Rol
-                        identidad.AddClaim(new Claim(ClaimTypes.Role, user.Rol.Nombre));
+                        identidad.AddClaim(new Claim(ClaimTypes.Role, user.Rol.ToString()));
 
                         ClaimsPrincipal principal = new ClaimsPrincipal(identidad);
 

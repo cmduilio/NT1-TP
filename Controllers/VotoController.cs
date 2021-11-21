@@ -46,7 +46,7 @@ namespace tp.Controllers
 
             Usuario.Votos.Add(Voto);
 
-            if (votoViewModel.Usuario.Rol.Nombre == "Periodista")
+            if (votoViewModel.Usuario.Rol == Rol.PERIODISTA)
             {
                 Juego.CantidadVotosPeriodista++;
                 Juego.PuntajeTotalPeriodista += votoViewModel.Puntaje;
