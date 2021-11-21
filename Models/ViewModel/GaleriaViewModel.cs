@@ -12,6 +12,10 @@ namespace tp.Models.ViewModel
 
         public double PuntajeTotalPeriodista { get; set; }
 
+        public int CantidadVotosJugador { get; set; }
+
+        public int CantidadVotosPeriodista { get; set; }
+
         public string Imagen { get; set; }
 
         public Categoria Categoria { get; set; } 

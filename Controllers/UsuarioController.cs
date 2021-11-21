@@ -156,13 +156,6 @@ namespace tp.Controllers
             {
                 var rolSeleccionado = (Rol) usuarioVm.Rol;
 
-                //esto q comente creo q se puede sacar no?
-                //¿si no selecciona rol: redirije al home, salta error o qué hacemos?
-                //if (rolSeleccionado == null)
-                //{
-                    //return View();
-                //}
-
                 var usuario = new Usuario
                 {
                     Nombre = usuarioVm.Nombre,
