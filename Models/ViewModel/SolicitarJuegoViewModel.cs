@@ -19,7 +19,6 @@ namespace tp.Models.ViewModel
 
         [Required(ErrorMessage = "La Imagen es un campo obligatorio.")]
         public string Imagen { get; set; }
-
         
         public Usuario Creador { get; set; }
 
