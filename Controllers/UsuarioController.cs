@@ -154,13 +154,6 @@ namespace tp.Controllers
             {
                 var rolSeleccionado = _juegoDbContext.Roles.Where(x => x.Id == usuarioVm.Rol).FirstOrDefault();
 
-                //esto q comente creo q se puede sacar no?
-                //¿si no selecciona rol: redirije al home, salta error o qué hacemos?
-                //if (rolSeleccionado == null)
-                //{
-                    //return View();
-                //}
-
                 var usuario = new Usuario
                 {
                     Nombre = usuarioVm.Nombre,
