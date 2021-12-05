@@ -92,7 +92,7 @@ namespace tp.Controllers
                     Value = x.Id.ToString()
                 })
                 .ToList();
-            var categoriaVm = new SolicitarJuegoViewModel
+            var categoriaVm = new SolicitarJuego
             {
                 Categorias = categorias,
             };
@@ -101,7 +101,7 @@ namespace tp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SolicitarJuego(SolicitarJuegoViewModel solicitarVm)
+        public IActionResult SolicitarJuego(SolicitarJuego solicitarVm)
         {
             if (ModelState.IsValid)
             {

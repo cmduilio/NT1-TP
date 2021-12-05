@@ -1,4 +1,4 @@
-@model List<tp.Models.ViewModel.SolicitarJuegoViewModel>;
+@model tp.Models.ViewModel.SolicitarJuegoViewModel;
 
 @{
     ViewData["Title"] = "Solicitar Juego";
@@ -6,7 +6,7 @@
 
 <div class="container mt-4">
     <div class="row">
-        @foreach (var item in Model)
+        @foreach (var item in Model.solicitudes)
         {
             <div class="col-md-4 col-sm-12">
                 <div class="card" style="width: 18rem;">
@@ -14,6 +14,15 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Nombre</h5>
                         <h6 class="TipoJuegos">@item.Categoria.Nombre</h6>
+                        <h6 class="Status">@item.Status</h6>
+                    </div>
+                    <div style="display: @item.Display;">
+                        <form asp-controller="Solicitud" method="post">
+                            <input asp-for="IdResolutor" value="@User.FindFirstValue(ClaimTypes.Name)" style="display: none;">
+                            <input asp-for="IdSolicitud" value="@item.Id" style="display: none;">
+                            <input asp-action="Aprobar" type="submit" value="Aprobar" class="btn btn-success">
+                            <input asp-action="Rechazar" type="submit" value="Rechazar" class="btn btn-danger">
+                        </form>
                     </div>
                 </div>
             </div>

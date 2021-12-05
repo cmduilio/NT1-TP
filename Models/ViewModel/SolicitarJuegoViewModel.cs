@@ -6,6 +6,14 @@ namespace tp.Models.ViewModel
 {
     public class SolicitarJuegoViewModel
     {
+        public List<SolicitarJuego> solicitudes { get; set; }
+        
+        public int IdResolutor { get; set; }
+        
+        public int IdSolicitud { get; set; }
+    }
+    public class SolicitarJuego
+    {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El Nombre es un campo obligatorio.")]
@@ -24,8 +32,11 @@ namespace tp.Models.ViewModel
         
         public int IdCreador { get; set; }
         public Usuario Creador { get; set; }
-
         public bool Aprobado { get; set; }
         public Juego Juego { get; set; }
+
+        public string Status { get; set; }
+
+        public string Display { get; set; }
     }
 }
